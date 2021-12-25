@@ -1,4 +1,4 @@
-# Rest-Countries
+# Rest Countries
 [Rest Countries API](https://restcountries.com/)
 
 ## Description
