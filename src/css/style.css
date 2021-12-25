@@ -1,0 +1,57 @@
+/* Sematic */
+body {
+  padding-bottom: 4rem;
+}
+header .row {
+  width: max-content;
+}
+footer {
+  min-height: 4rem;
+}
+
+/* Controls */
+#renderCountries, #clearStorage {
+  width: fit-content;
+  min-height: 3rem;
+}
+.form-control::placeholder {
+  color: #fff;
+}
+
+/* Table */
+#countriesTable tr > td:first-child {
+  text-align: center;
+  vertical-align: middle;
+}
+#countriesTable thead {
+  top: -1px;
+}
+#countriesTable th {
+  padding: 1rem 0;
+}
+
+/* Table Sort */
+[data-sortable] {
+  cursor: pointer;
+}
+[data-sortable]::after {
+  content: " \2193";
+}
+[data-sorted] {
+  background: #198754 !important;
+}
+
+/* Scroll to top */
+#scrollToTop {
+  width: 3rem;
+  height: 3rem;
+  right: 2rem;
+  bottom: 6rem;
+  transition: .5s;
+  opacity: 0;
+  visibility: hidden;
+}
+[data-show] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
