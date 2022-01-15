@@ -42,9 +42,9 @@ function setListeners() {
     let label = $("#findCountryByName").val(),
         region = $("#findCountryByRegion").val(),
         countries = Storage.get("countries"),
-        sortBy = $("#countriesTable [data-sorted]").text().toLowerCase() || "",
+        sortBy = $("#countriesTable [data-sorted]:not(#reverse)").text().toLowerCase() || "",
         countriesFound = findCountries(label, region, countries, sortBy);
-
+    
     renderCountries(countriesFound);
     return countriesFound;
   }
@@ -73,16 +73,13 @@ function setListeners() {
     window.scrollTo(0, 0);
   })
 
-  /*  ----------------------- NEED TO BE FIXED ----------------------- */
-  $("#reverse").click(() => {
+  $("#reverse").click(e => {
+    $(e.currentTarget).attr("data-sorted")
+      ? $(e.currentTarget).removeAttr("data-sorted")
+      : $(e.currentTarget).attr("data-sorted", true)
 
-    alert("This feature is going to be added!");
-
-    /*
-    let countries = searchCountries();
-    countries.reverse();
-    renderCountries(countries);
-    */
+    searchCountries()
+    $("#scrollToTop").click()
   });
 }
 
@@ -111,10 +108,9 @@ function toggleControls(checkbox) {
 
 // Render
 function renderCountries(countries) {
-  $(`#countriesTable tbody`).html(
-    countries.reduce((acc, country, index) => {
-      return acc +
-        `<tr>
+  const makeTable = (acc, country, index) => {
+    return acc +
+      `<tr>
         <td>${index + 1}</td>
         <td>${country.name.join(", ")}</td>
         <td>${country.capital.join(", ")}</td>
@@ -124,7 +120,12 @@ function renderCountries(countries) {
         <td>${country.currencies.join(", ")}</td>
         <td>${country.languages.join(", ")}</td>
       </tr>`
-    }, "")
+  }
+
+  $(`#countriesTable tbody`).html(
+    $("#reverse").attr("data-sorted")
+      ? countries.reduceRight(makeTable, "")
+      : countries.reduce(makeTable, "")
   )
 }
 
